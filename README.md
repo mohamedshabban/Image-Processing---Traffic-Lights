@@ -1,2 +1,2 @@
 # Image-Processing---Traffic-Lights
-Detect Traffic lights using Image Processing Techniques by Matlab
+Image Processing Techniques to detect traffic light and status of color(red/yellow/green).
