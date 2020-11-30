@@ -1,0 +1,72 @@
+img=imread('F:\4th year\image\project\Test cases\Case 4\1.jpg');
+
+figure,imshow(img);
+
+I = rgb2gray(img);
+I = im2bw(I);
+I = ~I;
+figure,imshow(I);
+[L ,num] = bwlabel(I);
+stats = regionprops(L,'BoundingBox');
+
+%List=stats(1).BoundingBox ;
+%imshow(img);
+%I2 = imcrop(img,List);
+is_four=zeros(1);
+for i=1:num
+    if((stats(i).BoundingBox(3)<stats(i).BoundingBox(4))&&(stats(i).BoundingBox(3)*2>stats(i).BoundingBox(4))&&stats(i).BoundingBox(3)>20)
+        rectangle('Position',stats(i).BoundingBox,'Edgecolor','r');
+        is_four=1;
+        I2=imcrop(img,stats(i).BoundingBox);
+    end
+end
+
+if(is_four~=1)
+List=stats(1).BoundingBox ;
+figure,imshow(img);
+I2 = imcrop(img,List);
+
+end
+figure,imshow(I2);
+[x,y,c]=size(I2) ;
+
+for i=1 :x 
+    for j=1 :y
+        if I2(i,j,1)>60 &&  I2(i,j,1)<80
+            I2(i,j,1)=70;
+        end
+     
+    end
+end
+red_count=0;
+green_count=0;
+yellow_count=0;
+[h, w ,l ]= size(I2);
+disp(h);
+disp(w);
+bbb = I2(1,1,2);
+for i = 1:h
+    for j = 1: w
+        if(I2(i,j,1)>200 && I2(i,j,2)<120)
+            red_count= red_count + 1 ;          
+        end
+         if(I2(i,j,2)>200 && I2(i,j,1)<120)
+             green_count= green_count + 1 ;
+         end
+         if (I2(i,j,2)>180 && I2(i,j,1)>230)
+             yellow_count = yellow_count+1;             
+         end
+    end
+end
+if(red_count>green_count)
+    disp('red')
+elseif (green_count>red_count)
+    disp('green')
+elseif(yellow_count > red_count&&yellow_count > green_count)
+        disp('Yellow')
+end
+
+
+
+
+

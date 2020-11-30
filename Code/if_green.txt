@@ -1,0 +1,90 @@
+
+img=imread('F:\4th year\image\project\Test cases\Case 1\3.jpg');
+data = imread('F:\4th year\image\project\Test cases\Case 2\3.jpg');
+
+    diff_im = imsubtract(data(:,:,2), rgb2gray(data));
+    %Use a median filter to filter out noise
+    diff_im = medfilt2(diff_im, [3 3]);
+    diff_im = im2bw(diff_im,0.18);
+    
+    diff_im = bwareaopen(diff_im,300);
+    
+    [bw,nu] = bwlabel(diff_im, 8);
+    
+    stats = regionprops(bw , 'BoundingBox', 'Centroid');
+  %  disp(stats(1).BoundingBox(1))
+     %List = stats(1).BoundingBox(1) ;
+     %  disp(list)
+%     I2 = imcrop(img,List);
+%     disp(stats(1).BoundingBox)
+
+    
+    % Display the image
+    figure,imshow(data)
+    hold on
+    bb = 0;
+    for object = 1:length(stats)
+        bb = stats(object).BoundingBox;
+        bc = stats(object).Centroid;
+        rectangle('Position',bb,'EdgeColor','r','LineWidth',2)
+        plot(bc(1),bc(2), '-m+')      
+    end
+   disp(bb)
+        if(bb>0)
+            
+           x=1;
+        else
+            x=0;
+        end
+        
+% c = if_green(stats);
+% if c == 1
+%     disp('green')
+% end
+
+        
+    
+    hold off
+% figure,imshow(img);
+% I = rgb2gray(img);
+% I = im2bw(I,0.2);
+% I = ~I;
+% BWs= edge(I,'sobel'); %or sobel
+% 
+% figure,imshow(BWs)
+% title('Binary Gradient Mask');
+% %%%%%%
+% [L ,num] = bwlabel(I);
+% 
+% stats = regionprops(L,'BoundingBox');
+% List=stats(1).BoundingBox ;
+% disp(List)
+% I2 = imcrop(img,List);
+% figure,imshow(I2);
+% [row,col]=size(I2);
+% count_red=0;
+% count_green=0;
+% count_yellow=0;
+% for i = 1:row
+%     for j = 1:col
+%      
+%         if(I2(i,j,1)>210 && I2(i,j,1) <=240)
+%             count_red =count_red+1;
+%         end
+%         if(I2(i,j,2)>170 && I2(i,j,2) <=240)
+%             count_green =count_green+1;
+%         end
+%     end
+% end
+% if count_red > count_yellow 
+%     disp('red')
+% 
+% else 
+%     disp 'yellow'
+% end
+% %%%%
+% 
+% 
+% 
+% %Test Case 1 , 2 
+% % ???? ????? ?? ?????

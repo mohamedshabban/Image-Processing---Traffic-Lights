@@ -1,0 +1,28 @@
+img=imread('F:\4th year\image\project\Test cases\Case 2\2.jpg');
+I = rgb2gray(img);
+I = im2bw(I);
+I = ~I;
+figure,imshow(I);
+[L ,num] = bwlabel(I);
+disp(num)
+
+se = strel('Square',double(15)); %test 3.2
+
+%se = strel('Square',double(6));
+ss = imerode(I,se);
+figure, imshow(ss);
+%
+m=bwareafilt(ss,1);
+[vv,num22] = bwlabel(m);
+%test case 4 
+% m=bwareafilt(ss,2);
+% m2=bwareafilt(ss,3);
+% m3=m2-m;
+% [vv,num22] = bwlabel(m3);
+% disp(num22)
+
+stats = regionprops(vv,'All');
+rectangle('Position',stats(1).BoundingBox,'Edgecolor','r');
+I2=imcrop(img,stats(1).BoundingBox);
+ figure,imshow(I2)
+

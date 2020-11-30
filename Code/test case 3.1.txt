@@ -1,0 +1,32 @@
+img=imread('E:\4th Year Courses 1st Term\Image Processing\Image Project\Test cases\Case 3\1.jpg');
+
+
+figure,imshow(img);
+
+I = rgb2gray(img);
+I = im2bw(I);
+I = ~I;
+figure,imshow(I);
+[L ,num] = bwlabel(I);
+stats = regionprops(L,'BoundingBox');
+rectangle('Position',stats(1).BoundingBox,'Edgecolor','r');
+stats(1).BoundingBox(1)=53;
+stats(1).BoundingBox(2)=138;
+stats(1).BoundingBox(3)=20;
+stats(1).BoundingBox(4)=42;
+
+I2=imcrop(img,stats(1).BoundingBox);
+figure,imshow(I2);
+
+
+
+
+
+
+
+
+
+
+
+
+
